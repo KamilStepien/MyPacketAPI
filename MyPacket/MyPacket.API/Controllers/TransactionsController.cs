@@ -23,5 +23,12 @@ namespace MyPacket.API.Controllers
             var result = _transactionService.GetAllTransactions();
             return Ok(result);
         }
+
+        [HttpPost]
+        public ActionResult<Transaction> PostTransation(Transaction transaction)
+        {
+            var result = _transactionService.CreateTransaction(transaction);
+            return Ok(result);
+        }
     }
 }

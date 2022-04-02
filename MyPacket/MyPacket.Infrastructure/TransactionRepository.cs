@@ -5,17 +5,24 @@ namespace MyPacket.Infrastructure
 {
     public class TransactionRepository : ITransactionRepository
     {
-        public static List<Transaction> transactions = new List<Transaction>()
-        {
-            new Transaction {Id = 1, Date = DateTime.Now, Amount = 100.02 },
-            new Transaction {Id = 2, Date = DateTime.Now, Amount = 20.12 },
-            new Transaction {Id = 3, Date = DateTime.Now, Amount = 59.32 }
+        private readonly MyPacketDbContext _myPacketDbContext;
 
-        };
+        public TransactionRepository(MyPacketDbContext myPacketDbContext)
+        {
+            _myPacketDbContext = myPacketDbContext;
+        }
+
+        public Transaction CreateTransaction(Transaction transaction)
+        {
+            _myPacketDbContext.Transactions.Add(transaction);
+            _myPacketDbContext.SaveChanges();
+
+            return transaction;
+        }
 
         public List<Transaction> GetAllTransactions()
         {
-            return transactions;
+            return _myPacketDbContext.Transactions.ToList();
         }
     }
 }
