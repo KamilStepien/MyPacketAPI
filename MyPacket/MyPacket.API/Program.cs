@@ -1,9 +1,12 @@
+using Microsoft.EntityFrameworkCore;
 using MyPacket.Application.Repositories;
 using MyPacket.Application.Services;
 using MyPacket.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Register Configuration
+ConfigurationManager configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -11,9 +14,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Add Database Service
+//add-migration {name}
+//update-database
+builder.Services.AddDbContext<MyPacketDbContext>(opt => opt.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+    b => b.MigrationsAssembly("MyPacket.API")));
+
 builder.Services.AddScoped<ITransactionService, TransactionService>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-
 
 var app = builder.Build();
 

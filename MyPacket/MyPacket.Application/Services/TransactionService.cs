@@ -12,6 +12,12 @@ namespace MyPacket.Application.Services
             _transactionRepository = transactionRepository;
         }
 
+        public Transaction CreateTransaction(Transaction transaction)
+        {
+            _transactionRepository.CreateTransaction(transaction);
+            return transaction;
+        }
+
         public List<Transaction> GetAllTransactions()
         {
             var transactios = _transactionRepository.GetAllTransactions();
