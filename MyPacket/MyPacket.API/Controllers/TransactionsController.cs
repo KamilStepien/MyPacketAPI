@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyPacket.Application.DTOs.TransactionDto;
 using MyPacket.Application.Services;
-using MyPacket.Domain;
-using SerilogTimings;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -21,19 +20,43 @@ namespace MyPacket.API.Controllers
         }
 
         [HttpGet]
-        public ActionResult<List<Transaction>> Get()
+        public ActionResult<List<TransactionResponse>> GetTransactions()
         {
-            _logger.LogInformation("Get all Transactions");
-            var result = _transactionService.GetAllTransactions();
+            _logger.LogInformation("Get transactions");
+            var result = _transactionService.GetTransactions();
+            return Ok(result);
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult<List<TransactionResponse>> GetTransactionById(int id)
+        {
+            _logger.LogInformation("Get transaction {id}", id);
+            var result = _transactionService.GetTransactionById(id);
             return Ok(result);
         }
 
         [HttpPost]
-        public ActionResult<Transaction> PostTransation(Transaction transaction)
+        public ActionResult<TransactionResponse> Create(CreateTransactionRequest request)
         {
             _logger.LogInformation("Create transation");
-            var result = _transactionService.CreateTransaction(transaction);
+            var result = _transactionService.CreateTransaction(request);
             return Ok(result);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult<TransactionResponse> Update(int id ,UpdateTransactionRequest request)
+        {
+            _logger.LogInformation("Update transation {id}", id);
+            var result = _transactionService.UpdateTransaction(id, request);
+            return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            _logger.LogInformation("Delete transation {id}", id);
+            _transactionService.DeleteTransactionById(id);
+            return NoContent();
         }
     }
 }
