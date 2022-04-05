@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyPacket.Infrastructure;
 
@@ -11,9 +12,10 @@ using MyPacket.Infrastructure;
 namespace MyPacket.API.Migrations
 {
     [DbContext(typeof(MyPacketDbContext))]
-    partial class MyPacketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220405200228_Add_transaction")]
+    partial class Add_transaction
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

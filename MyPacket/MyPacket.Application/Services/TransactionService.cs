@@ -1,5 +1,5 @@
-﻿using MyPacket.Application.Repositories;
-using MyPacket.Domain;
+﻿using MyPacket.Application.DTOs.TransactionDto;
+using MyPacket.Application.Repositories;
 
 namespace MyPacket.Application.Services
 {
@@ -12,17 +12,33 @@ namespace MyPacket.Application.Services
             _transactionRepository = transactionRepository;
         }
 
-        public Transaction CreateTransaction(Transaction transaction)
+        public TransactionResponse CreateTransaction(CreateTransactionRequest request)
         {
-            _transactionRepository.CreateTransaction(transaction);
-            return transaction;
+            var result = _transactionRepository.CreateTransaction(request);
+            return result;
         }
 
-        public List<Transaction> GetAllTransactions()
+        public void DeleteTransactionById(int transactionId)
         {
-            var transactios = _transactionRepository.GetAllTransactions();
+            _transactionRepository.DeleteTransactionById(transactionId);
+        }
 
+        public TransactionResponse GetTransactionById(int id)
+        {
+            var result = _transactionRepository.GetTransactionById(id);
+            return result;
+        }
+
+        public List<TransactionResponse> GetTransactions()
+        {
+            var transactios = _transactionRepository.GetTransactions();
             return transactios;
+        }
+
+        public TransactionResponse UpdateTransaction(int transactionId, UpdateTransactionRequest request)
+        {
+            var result = _transactionRepository.UpdateTransaction(transactionId, request);
+            return result;
         }
     }
 }
